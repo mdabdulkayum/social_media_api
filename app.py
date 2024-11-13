@@ -77,23 +77,6 @@ def predict():
     prediction = int(result[0])  # Assuming a binary outcome (0 or 1)
     return jsonify({'addicted': prediction})
 
-  #  result = model.predict(input_data)
-  #  return jsonify({'adicted': result})
-'''
-    input_query = np.array([[age, encoded_gender, encoded_profession, encoded_spendTimeOnProf, encoded_whatSNSUse,
-                  encoded_spendTimeOnSNS, encoded_spendTimeWithFamily, encoded_whyUseSNS,
-                  encoded_personalBenifitUseSNS, encoded_whenAccessSNS, encoded_policyAffectSNS,
-                  encoded_adInfluencePurch, encoded_forgetTime]])
-
-#    input_query = np.array([[age, gender, profession, spendTimeOnProf, whatSNSUse, spendTimeOnSNS, spendTimeWithFamily, whyUseSNS, personalBenifitUseSNS, whenAccessSNS, policyAffectSNS, adInfluencePurch, forgetTime]])
-
-  #  result = {'age': age, 'gender': gender, 'profession': profession}
-  #  return jsonify(result)
-
-    result = model.predict(input_query)[0]
-    return jsonify({'adicted' :result})
-'''
-
 
 if __name__ == '__main__':
     app.run(debug=True)
