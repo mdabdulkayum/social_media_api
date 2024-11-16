@@ -41,41 +41,45 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    age = request.form.get('age').lower()
-    gender = request.form.get('gender').lower()
-    profession = request.form.get('profession').lower()
-    spendTimeOnProf = request.form.get('spendTimeOnProf').lower()
-    whatSNSUse = request.form.get('whatSNSUse').lower()
-    spendTimeOnSNS = request.form.get('spendTimeOnSNS').lower()
-    spendTimeWithFamily = request.form.get('spendTimeWithFamily').lower()
-    whyUseSNS = request.form.get('whyUseSNS').lower()
-    personalBenifitUseSNS = request.form.get('personalBenifitUseSNS').lower()
-    whenAccessSNS = request.form.get('whenAccessSNS').lower()
-    policyAffectSNS = request.form.get('policyAffectSNS').lower()
-    adInfluencePurch = request.form.get('adInfluencePurch').lower()
-    forgetTime = request.form.get('forgetTime').lower()
-
-    encoded_gender = encoder_gender.transform([gender])[0]
-    encoded_profession = encoder_profession.transform([profession])[0]
-    encoded_spendTimeOnProf = encoder_spendTimeOnProf.transform([spendTimeOnProf])[0]
-    encoded_whatSNSUse = encoder_whatSNSUse.transform([whatSNSUse])[0]
-    encoded_spendTimeOnSNS = encoder_spendTimeOnSNS.transform([spendTimeOnSNS])[0]
-    encoded_spendTimeWithFamily = encoder_spendTimeWithFamily.transform([spendTimeWithFamily])[0]
-    encoded_whyUseSNS = encoder_whyUseSNS.transform([whyUseSNS])[0]
-    encoded_personalBenifitUseSNS = encoder_personalBenifitUseSNS.transform([personalBenifitUseSNS])[0]
-    encoded_whenAccessSNS = encoder_whenAccessSNS.transform([whenAccessSNS])[0]
-    encoded_policyAffectSNS = encoder_policyAffectSNS.transform([policyAffectSNS])[0]
-    encoded_adInfluencePurch = encoder_adInfluencePurch.transform([adInfluencePurch])[0]
-    encoded_forgetTime = encoder_forgetTime.transform([forgetTime])[0]
-
-    input_data = [age, encoded_gender, encoded_profession, encoded_spendTimeOnProf, encoded_whatSNSUse,
-                  encoded_spendTimeOnSNS, encoded_spendTimeWithFamily, encoded_whyUseSNS,
-                  encoded_personalBenifitUseSNS, encoded_whenAccessSNS, encoded_policyAffectSNS,
-                  encoded_adInfluencePurch, encoded_forgetTime]
-
-    result = model.predict([input_data])
-    prediction = int(result[0])  # Assuming a binary outcome (0 or 1)
-    return jsonify({'addicted': prediction})
+    try:
+        age = request.form.get('age').lower()
+        gender = request.form.get('gender').lower()
+        profession = request.form.get('profession').lower()
+        spendTimeOnProf = request.form.get('spendTimeOnProf').lower()
+        whatSNSUse = request.form.get('whatSNSUse').lower()
+        spendTimeOnSNS = request.form.get('spendTimeOnSNS').lower()
+        spendTimeWithFamily = request.form.get('spendTimeWithFamily').lower()
+        whyUseSNS = request.form.get('whyUseSNS').lower()
+        personalBenifitUseSNS = request.form.get('personalBenifitUseSNS').lower()
+        whenAccessSNS = request.form.get('whenAccessSNS').lower()
+        policyAffectSNS = request.form.get('policyAffectSNS').lower()
+        adInfluencePurch = request.form.get('adInfluencePurch').lower()
+        forgetTime = request.form.get('forgetTime').lower()
+    
+        encoded_gender = encoder_gender.transform([gender])[0]
+        encoded_profession = encoder_profession.transform([profession])[0]
+        encoded_spendTimeOnProf = encoder_spendTimeOnProf.transform([spendTimeOnProf])[0]
+        encoded_whatSNSUse = encoder_whatSNSUse.transform([whatSNSUse])[0]
+        encoded_spendTimeOnSNS = encoder_spendTimeOnSNS.transform([spendTimeOnSNS])[0]
+        encoded_spendTimeWithFamily = encoder_spendTimeWithFamily.transform([spendTimeWithFamily])[0]
+        encoded_whyUseSNS = encoder_whyUseSNS.transform([whyUseSNS])[0]
+        encoded_personalBenifitUseSNS = encoder_personalBenifitUseSNS.transform([personalBenifitUseSNS])[0]
+        encoded_whenAccessSNS = encoder_whenAccessSNS.transform([whenAccessSNS])[0]
+        encoded_policyAffectSNS = encoder_policyAffectSNS.transform([policyAffectSNS])[0]
+        encoded_adInfluencePurch = encoder_adInfluencePurch.transform([adInfluencePurch])[0]
+        encoded_forgetTime = encoder_forgetTime.transform([forgetTime])[0]
+    
+        input_data = [age, encoded_gender, encoded_profession, encoded_spendTimeOnProf, encoded_whatSNSUse,
+                      encoded_spendTimeOnSNS, encoded_spendTimeWithFamily, encoded_whyUseSNS,
+                      encoded_personalBenifitUseSNS, encoded_whenAccessSNS, encoded_policyAffectSNS,
+                      encoded_adInfluencePurch, encoded_forgetTime]
+    
+        result = model.predict([input_data])
+        prediction = int(result[0])  # Assuming a binary outcome (0 or 1)
+        return jsonify({'addicted': prediction})
+    except Exception as e:
+        return {"error": str(e)}, 500
+    
 
 
 if __name__ == '__main__':
